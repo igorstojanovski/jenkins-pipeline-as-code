@@ -1,13 +1,15 @@
 pipeline {
     agent any
 
-  triggers {
-    pollSCM('')
-  }
+    triggers {
+        pollSCM('')
+    }
 
     stages {
         stage('Gradle Build') {
-            sh './gradlew clean build'
+            steps {
+                sh './gradlew clean build'                    
+            }            
         }            
     }
 }
