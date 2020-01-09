@@ -13,8 +13,18 @@ pipeline {
         }
         stage('Tests') {
             steps {
-                sh './gradlew test'                    
-            }                
-        }      
+                sh './gradlew test'
+            }
+            steps {
+                parallel(
+                    UT: {
+                        sh './gradlew test'
+                    },
+                    IT: {
+                        sh './gradlew integrationTest'
+                    }
+                )
+            }
+        }
     }
 }
