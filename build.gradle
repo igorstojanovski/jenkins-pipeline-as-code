@@ -31,6 +31,17 @@ dependencies {
 	testCompile("org.assertj:assertj-core:3.11.1")
 }
 
-test {
-	useJUnitPlatform()
+tasks.withType(Test) { Test task ->
+	task.useJUnitPlatform { JUnitPlatformOptions options ->
+		options.excludeTags 'IT'
+	}
+	testLogging {
+		events("passed", "skipped", "failed")
+	}
+}
+
+task integrationTest(type: Test) { Test task ->
+	task.useJUnitPlatform { JUnitPlatformOptions options ->
+		options.includeTags 'IT'
+	}
 }
