@@ -12,7 +12,7 @@ pipeline {
         stage('UT') {
           agent {
             dockerfile {
-              filename 'node:7-alpine'
+              image 'node:7-alpine'
             }
 
           }
