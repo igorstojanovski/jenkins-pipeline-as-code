@@ -17,6 +17,7 @@ pipeline {
             docker {
               image 'openjdk:11-stretch'
             }
+
           }
           steps {
             sh './gradlew test'
@@ -28,8 +29,19 @@ pipeline {
             sh './gradlew integrationTest'
           }
         }
+
       }
     }
+
+    stage('Sonar') {
+      steps {
+        withSonarQubeEnv(installationName: 'SonarCloud', credentialsId: 'SonarCloud') {
+          waitForQualityGate(credentialsId: 'SonarCloudOne', webhookSecretId: 'WebHookSercreId')
+        }
+
+      }
+    }
+
   }
   triggers {
     pollSCM('')
