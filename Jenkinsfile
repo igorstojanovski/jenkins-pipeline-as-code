@@ -18,7 +18,6 @@ pipeline {
           }
           steps {
             sh './gradlew test'
-            withSonarQubeEnv(installationName: 'SonarCloudOne', credentialsId: 'SonarCloudOne')
           }
         }
 
@@ -26,6 +25,15 @@ pipeline {
           steps {
             sh './gradlew integrationTest'
           }
+        }
+
+      }
+    }
+
+    stage('SonarCloud') {
+      steps {
+        withSonarQubeEnv(installationName: 'SonarCloudOne', credentialsId: 'SonarCloudOne') {
+          waitForQualityGate(credentialsId: 'SonarCloudOne', abortPipeline: true)
         }
 
       }
