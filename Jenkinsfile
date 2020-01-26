@@ -11,7 +11,7 @@ pipeline {
       parallel {
         stage('UT') {
           agent {
-            dockerfile {
+            docker {
               image 'node:7-alpine'
             }
 
