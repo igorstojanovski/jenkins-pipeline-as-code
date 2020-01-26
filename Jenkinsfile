@@ -34,14 +34,12 @@ pipeline {
     }
 
     stage('Sonar') {
-      steps {
-        withSonarQubeEnv(installationName: 'SonarCloud', credentialsId: 'SonarCloud') {
-          waitForQualityGate(credentialsId: 'SonarCloudOne', webhookSecretId: 'WebHookSercreId')
+      node {
+        docker.image('sonarsource/sonar-scanner-cli').inside{
+          sh "sonar-scanner --version"
         }
-
       }
     }
-
   }
   triggers {
     pollSCM('')
