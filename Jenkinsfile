@@ -1,27 +1,37 @@
 pipeline {
-    agent any
-
-    triggers {
-        pollSCM('')
+  agent any
+  stages {
+    stage('Gradle Build') {
+      steps {
+        sh './gradlew clean build'
+      }
     }
 
-    stages {
-        stage('Gradle Build') {
-            steps {
-                sh './gradlew clean build'
+    stage('Tests') {
+      parallel {
+        stage('UT') {
+          agent {
+            dockerfile {
+              filename 'node:7-alpine'
             }
+
+          }
+          steps {
+            sh './gradlew test'
+          }
         }
-        stage('Tests') {
-            steps {
-                parallel(
-                    UT: {
-                        sh './gradlew test'
-                    },
-                    IT: {
-                        sh './gradlew integrationTest'
-                    }
-                )
-            }
+
+        stage('IT') {
+          steps {
+            sh './gradlew integrationTest'
+          }
         }
+
+      }
     }
+
+  }
+  triggers {
+    pollSCM('')
+  }
 }
