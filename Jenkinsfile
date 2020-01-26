@@ -18,7 +18,7 @@ pipeline {
           }
           steps {
             sh './gradlew test'
-            withSonarQubeEnv(installationName: 'SonarQubeOne', credentialsId: 'SonarQubeCOne')
+            withSonarQubeEnv(installationName: 'SonarCloudOne', credentialsId: 'SonarCloudOne')
           }
         }
 
