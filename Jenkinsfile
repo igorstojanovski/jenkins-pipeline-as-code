@@ -32,14 +32,6 @@ pipeline {
 
       }
     }
-
-    stage('Sonar') {
-      node {
-        docker.image('sonarsource/sonar-scanner-cli').inside{
-          sh "sonar-scanner --version"
-        }
-      }
-    }
   }
   triggers {
     pollSCM('')
