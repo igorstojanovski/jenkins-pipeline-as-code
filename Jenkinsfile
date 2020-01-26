@@ -36,9 +36,9 @@ pipeline {
     stage('SonarCloud') {
       steps {
         agent {
-            docker {
-              image 'sonarsource/sonar-scanner-cli'
-            }
+          docker {
+             image 'sonarsource/sonar-scanner-cli'
+          }
         }
         withSonarQubeEnv(installationName: 'SonarCloudOne', credentialsId: 'SonarCloudOne') {
           waitForQualityGate(credentialsId: 'SonarCloudOne', abortPipeline: true)
