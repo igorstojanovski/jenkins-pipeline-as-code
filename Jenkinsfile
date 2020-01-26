@@ -21,6 +21,7 @@ pipeline {
           }
           steps {
             sh './gradlew test'
+            withSonarQubeEnv(installationName: 'SonarQubeOne', credentialsId: 'SonarQubeCOne')
           }
         }
 
@@ -32,6 +33,7 @@ pipeline {
 
       }
     }
+
   }
   triggers {
     pollSCM('')
