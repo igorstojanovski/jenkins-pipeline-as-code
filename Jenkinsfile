@@ -12,7 +12,7 @@ pipeline {
         stage('UT') {
           agent {
             docker {
-              image 'node:7-alpine'
+              image 'openjdk:11-stretch'
             }
 
           }
