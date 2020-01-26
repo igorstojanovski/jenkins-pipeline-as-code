@@ -30,11 +30,9 @@ pipeline {
       }
     }
 
-    stage('SonarCloud') {         
+    stage('SonarCloud') {
       steps {
-        withSonarQubeEnv(installationName: 'SonarCloudOne', credentialsId: 'SonarCloudOne') {
-          waitForQualityGate(credentialsId: 'SonarCloudOne', abortPipeline: true)
-        }
+        withSonarQubeEnv(installationName: 'SonarCloudOne', credentialsId: 'SonarCloudOne')
       }
     }
 
