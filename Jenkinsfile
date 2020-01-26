@@ -1,27 +1,37 @@
 pipeline {
-    agent any
-
-    triggers {
-        pollSCM('')
+  agent any
+  stages {
+    stage('Gradle Build') {
+      steps {
+        sh './gradlew clean build'
+      }
     }
 
-    stages {
-        stage('Gradle Build') {
-            steps {
-                sh './gradlew clean build'
+    stage('Tests') {
+      parallel {
+        stage('UT') {
+          agent {
+            docker {
+              image 'openjdk:11-stretch'
             }
+
+          }
+          steps {
+            sh './gradlew test'
+          }
         }
-        stage('Tests') {
-            steps {
-                parallel(
-                    UT: {
-                        sh './gradlew test'
-                    },
-                    IT: {
-                        sh './gradlew integrationTest'
-                    }
-                )
-            }
+
+        stage('IT') {
+          steps {
+            sh './gradlew integrationTest'
+          }
         }
+
+      }
     }
+
+  }
+  triggers {
+    pollSCM('')
+  }
 }
