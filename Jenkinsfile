@@ -30,6 +30,15 @@ pipeline {
       }
     }
 
+    stage('Sonar') {
+      steps {
+        withSonarQubeEnv(installationName: 'SonarCloud', credentialsId: 'SonarCloud') {
+          waitForQualityGate(credentialsId: 'SonarCloudOne', webhookSecretId: 'WebHookSercreId')
+        }
+
+      }
+    }
+
   }
   triggers {
     pollSCM('')
