@@ -31,9 +31,14 @@ pipeline {
     }
 
     stage('Smoke') {
-      steps {
-        sh './gradlew smokeTest'
-      }
+        node {            
+            docker.image('openjdk:11-stretch').withRun('-p 3306:3306') { c ->
+                sh 'java --vesrsion'
+            }
+        }
+        steps {
+            sh './gradlew smokeTest'
+        }
     }
 
   }
