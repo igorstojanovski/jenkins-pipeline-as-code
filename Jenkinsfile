@@ -30,6 +30,12 @@ pipeline {
       }
     }
 
+    stage('Smoke') {
+      steps {
+        sh './gradlew smokeTest'
+      }
+    }
+
   }
   triggers {
     pollSCM('')
