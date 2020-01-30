@@ -34,7 +34,7 @@ dependencies {
 
 tasks.withType(Test) { Test task ->
 	task.useJUnitPlatform { JUnitPlatformOptions options ->
-		options.excludeTags 'IT'
+		options.excludeTags 'IT','Smoke'
 	}
 	testLogging {
 		events("passed", "skipped", "failed")
