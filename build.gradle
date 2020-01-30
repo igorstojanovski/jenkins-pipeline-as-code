@@ -29,6 +29,7 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testCompile("org.assertj:assertj-core:3.11.1")
+	testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.11'
 }
 
 tasks.withType(Test) { Test task ->
@@ -43,5 +44,11 @@ tasks.withType(Test) { Test task ->
 task integrationTest(type: Test) { Test task ->
 	task.useJUnitPlatform { JUnitPlatformOptions options ->
 		options.includeTags 'IT'
+	}
+}
+
+task smokeTest(type: Test) { Test task ->
+	task.useJUnitPlatform { JUnitPlatformOptions options ->
+		options.includeTags 'Smoke'
 	}
 }
