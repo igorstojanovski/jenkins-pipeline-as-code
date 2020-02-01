@@ -4,6 +4,9 @@ pipeline {
     stage('Gradle Build') {
       steps {
         sh './gradlew clean build'
+        script {
+          docker.build("pipeline-as-code-app:${env.BUILD_ID}")
+        }
       }
     }
 
@@ -23,15 +26,6 @@ pipeline {
         stage('IT') {
           steps {
             sh './gradlew integrationTest'
-          }
-        }
-
-        stage('Create image') {
-          steps{    
-            script {
-              def customImage = docker.build("pipeline-as-code-app:${env.BUILD_ID}")              
-              customImage.push()
-            }
           }
         }
       }
