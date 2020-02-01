@@ -36,23 +36,6 @@ pipeline {
         }
       }
     }
-
-    stage('Smoke') {
-          node {
-            checkout scm
-
-            docker.image("pipeline-as-code-app:${env.BUILD_ID}").withRun('-p 8384:8384') { c ->
-                /* Wait until mysql service is up */
-                sh 'while ! mysqladmin ping -h0.0.0.0 --silent; do sleep 1; done'
-                /* Run some tests which require MySQL */
-                sh 'make check'
-            }
-          }
-        steps {
-            sh './gradlew smokeTest'
-        }
-    }
-
   }
   triggers {
     pollSCM('')
