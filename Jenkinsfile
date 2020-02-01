@@ -38,7 +38,6 @@ pipeline {
     }
 
     stage('Smoke') {
-        agent {
           node {
             checkout scm
 
@@ -49,7 +48,6 @@ pipeline {
                 sh 'make check'
             }
           }
-        }
         steps {
             sh './gradlew smokeTest'
         }
