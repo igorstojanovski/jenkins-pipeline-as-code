@@ -23,8 +23,10 @@ pipeline {
     }
 
     stage('SonarCloud') {
+      environment {
+        scannerHome = tool 'SonarQubeScanner'
+      }
       steps {
-        def scannerHome = tool 'SonarScanner 4.0';
         withSonarQubeEnv(installationName: 'SonarCloudOne', credentialsId: 'SonarCloudOne') {
             sh "${scannerHome}/bin/sonar-scanner"
         }
