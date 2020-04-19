@@ -30,7 +30,7 @@ pipeline {
         PROJECT_NAME = "igorstojanovski_jenkins-pipeline-as-code"
       }
       steps {
-        withSonarQubeEnv() {
+        withSonarQubeEnv('SonarCloudOne') {
             sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
             -Dsonar.java.binaries=build/classes/java/ \
             -Dsonar.projectKey=$PROJECT_NAME \
